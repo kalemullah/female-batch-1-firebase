@@ -1,31 +1,32 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
+import 'package:firebaseproject/UI/auth/signup_screen/signup_screen.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
 import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isloading = false;
-  signupFunction() {
+  loginFunction() {
     isloading = true;
     setState(() {});
     FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
+        .signInWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim())
         .then((v) {
-      fluttertoas().showpopup(colors.greencolor, 'sigup successfully');
+      fluttertoas().showpopup(colors.greencolor, 'login successfully');
+
       isloading = false;
       setState(() {});
     }).onError((error, Stack) {
@@ -46,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Signup Screen',
+                'Login Screen',
                 style: TextStyle(fontSize: 20.sp),
               ),
               SizedBox(
@@ -88,19 +89,20 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 20.h,
               ),
               CUstomButton(
-                  isloading: isloading,
-                  text: 'signup',
-                  btncolor: Colors.white,
-                  ontap: signupFunction),
+                isloading: isloading,
+                text: 'Login',
+                btncolor: Colors.white,
+                ontap: loginFunction,
+              ),
               SizedBox(
                 height: 10.h,
               ),
               CUstomButton(
-                text: 'login',
+                text: 'Sigup',
                 btncolor: Colors.white.withOpacity(.5),
                 ontap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                      MaterialPageRoute(builder: (context) => SignupScreen()));
                 },
               ),
             ],
