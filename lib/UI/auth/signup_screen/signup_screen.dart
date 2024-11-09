@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
+import 'package:firebaseproject/UI/home_screen/home_screen.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
 import 'package:firebaseproject/utils/toast.dart';
@@ -26,6 +27,9 @@ class _SignupScreenState extends State<SignupScreen> {
             password: passwordController.text.trim())
         .then((v) {
       fluttertoas().showpopup(colors.greencolor, 'sigup successfully');
+
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
       isloading = false;
       setState(() {});
     }).onError((error, Stack) {
