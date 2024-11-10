@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
 import 'package:firebaseproject/utils/toast.dart';
@@ -14,6 +16,9 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  final database = FirebaseDatabase.instance.ref('todo');
+
+  bool isdataadded = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +74,7 @@ class _AddTaskState extends State<AddTask> {
               ),
               SizedBox(height: 20.h),
               CUstomButton(
-                  isloading: false,
+                  isloading: isdataadded,
                   text: 'Add Task',
                   btncolor: colors.secondcolor.withOpacity(.4),
                   ontap: () {
@@ -83,6 +88,32 @@ class _AddTaskState extends State<AddTask> {
                     } else if (descriptionController.text.isEmpty) {
                       fluttertoas().showpopup(
                           colors.redcolor, 'please enter description of task');
+                    } else {
+                      isdataadded = true;
+                      setState(() {});
+                      String id =
+                          DateTime.now().microsecondsSinceEpoch.toString();
+                      database.child(id).set({
+                        'title': titleController.text.trim().toString(),
+                        'description':
+                            descriptionController.text.trim().toString(),
+                        'id': id,
+                        'uid': FirebaseAuth.instance.currentUser!.uid,
+                      }).then((v) {
+                        fluttertoas().showpopup(
+                            colors.greencolor, 'Task Added successfully');
+                        titleController.clear();
+                        descriptionController.clear();
+                        isdataadded = false;
+                        setState(() {});
+                        // ignore: use_build_context_synchronously
+                        Navigator.pop(context);
+                      }).onError((error, v) {
+                        isdataadded = false;
+                        setState(() {});
+                        fluttertoas()
+                            .showpopup(colors.redcolor, 'Error $error');
+                      });
                     }
                   }),
             ],
