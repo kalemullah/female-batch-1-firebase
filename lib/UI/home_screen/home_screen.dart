@@ -111,14 +111,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               GestureDetector(
                                 onTap: () {
                                   print('this is key ${snapshot.key}');
-                                  // database.child(snapshot.key!).remove().then((v) {
-                                  //   fluttertoas().showpopup(
-                                  //       colors.maincolor, 'task deleted');
-                                  // });
-
                                   database
                                       .child(snapshot.key!)
-                                      .update({"title": "task22"});
+                                      .remove()
+                                      .then((v) {
+                                    fluttertoas().showpopup(
+                                        colors.maincolor, 'task deleted');
+                                  });
                                 },
                                 child: Icon(
                                   Icons.delete,
