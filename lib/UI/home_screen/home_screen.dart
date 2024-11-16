@@ -3,7 +3,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
 import 'package:firebaseproject/UI/home_screen/add_task.dart';
+import 'package:firebaseproject/UI/home_screen/update_task.dart';
+import 'package:firebaseproject/utils/colors.dart';
+import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -65,18 +69,64 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            '${snapshot.child('title').value}',
-                            style: const TextStyle(
-                                color: Colors.black, fontSize: 20),
+                          Column(
+                            children: [
+                              Text(
+                                '${snapshot.child('title').value}',
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 20),
+                              ),
+                              Text(
+                                '${snapshot.child('description').value}',
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 20),
+                              ),
+                            ],
                           ),
-                          Text(
-                            '${snapshot.child('description').value}',
-                            style: const TextStyle(color: Colors.black, fontSize: 20),
-                          ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UpdateTaskScreen(
+                                                  title: snapshot
+                                                      .child('title')
+                                                      .value,
+                                                  description: snapshot
+                                                      .child('description')
+                                                      .value,
+                                                  id: snapshot
+                                                      .child('id')
+                                                      .value,
+                                                )));
+                                  },
+                                  child: Icon(Icons.edit)),
+                              SizedBox(width: 10.w),
+                              GestureDetector(
+                                onTap: () {
+                                  print('this is key ${snapshot.key}');
+                                  // database.child(snapshot.key!).remove().then((v) {
+                                  //   fluttertoas().showpopup(
+                                  //       colors.maincolor, 'task deleted');
+                                  // });
+
+                                  database
+                                      .child(snapshot.key!)
+                                      .update({"title": "task22"});
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                              )
+                            ],
+                          )
                         ],
                       ),
                     ),

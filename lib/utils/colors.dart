@@ -5,4 +5,5 @@ class colors {
   static const secondcolor = Colors.white;
   static const greencolor = Colors.green;
   static const redcolor = Colors.red;
+  static const blackcolor = Colors.black;
 }

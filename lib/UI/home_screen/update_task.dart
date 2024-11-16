@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
@@ -6,30 +5,39 @@ import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+class UpdateTaskScreen extends StatefulWidget {
+  UpdateTaskScreen({super.key, this.title, this.description, this.id});
+
+  final title;
+  final description;
+  final id;
 
   @override
-  State<AddTask> createState() => _AddTaskState();
+  State<UpdateTaskScreen> createState() => _UpdateTaskScreenState();
 }
 
-class _AddTaskState extends State<AddTask> {
-  TextEditingController titleController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  final database = FirebaseDatabase.instance.ref('todo');
+final database = FirebaseDatabase.instance.ref('todo');
+TextEditingController titleController = TextEditingController(
+  text: 'title',
+);
+TextEditingController descriptionController = TextEditingController(
+  text: 'description',
+);
+bool isdataadded = false;
 
-  bool isdataadded = false;
+class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
   @override
   Widget build(BuildContext context) {
+    titleController.text = widget.title;
+    descriptionController.text = widget.description;
     return Scaffold(
+      backgroundColor: colors.maincolor,
       appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(Icons.arrow_back_ios)),
+        title: Text(
+          'Update screen',
+          style: TextStyle(color: colors.blackcolor),
+        ),
       ),
-      backgroundColor: colors.maincolor.withOpacity(.9),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -75,7 +83,7 @@ class _AddTaskState extends State<AddTask> {
               SizedBox(height: 20.h),
               CUstomButton(
                   isloading: isdataadded,
-                  text: 'Add Task',
+                  text: 'Update Task',
                   btncolor: colors.secondcolor.withOpacity(.4),
                   ontap: () {
                     print(
@@ -91,14 +99,11 @@ class _AddTaskState extends State<AddTask> {
                     } else {
                       isdataadded = true;
                       setState(() {});
-                      String id =
-                          DateTime.now().microsecondsSinceEpoch.toString();
-                      database.child(id).set({
+
+                      database.child(widget.id).update({
                         'title': titleController.text.trim().toString(),
                         'description':
                             descriptionController.text.trim().toString(),
-                        'id': id,
-                        'uid': FirebaseAuth.instance.currentUser!.uid,
                       }).then((v) {
                         fluttertoas().showpopup(
                             colors.greencolor, 'Task Added successfully');
@@ -120,8 +125,6 @@ class _AddTaskState extends State<AddTask> {
           ),
         ),
       ),
-   
-   
     );
   }
 }
