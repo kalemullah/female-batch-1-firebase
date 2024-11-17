@@ -17,7 +17,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final database = FirebaseDatabase.instance.ref('todo');
+  final db = FirebaseDatabase.instance.ref('todo');
+  TextEditingController searchcontroller = TextEditingController();
+  final database = FirebaseDatabase.instance
+      .ref('todo')
+      .orderByChild('uid')
+      .equalTo(FirebaseAuth.instance.currentUser!.uid);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,74 +67,177 @@ class _HomeScreenState extends State<HomeScreen> {
               'Home Screen',
               style: TextStyle(color: Colors.black),
             ),
+            SizedBox(height: 10.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: TextField(
+                controller: searchcontroller,
+                onChanged: (v) {
+                  setState(() {});
+                },
+                style: TextStyle(fontSize: 16, color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Search task',
+                  hintStyle: TextStyle(fontSize: 16, color: Color.secondcolor),
+                  fillColor: Color.maincolor.withOpacity(.8),
+                  filled: true,
+                  enabledBorder: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10.h),
             Expanded(
               child: FirebaseAnimatedList(
                 query: database,
                 itemBuilder: (context, snapshot, animation, index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: Card(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                '${snapshot.child('title').value}',
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 20),
+                  if (snapshot
+                      .child('title')
+                      .value
+                      .toString()
+                      .contains(searchcontroller.text.toString())) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Card(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 300,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${snapshot.child('title').value}',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '${snapshot.child('description').value}',
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 20),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                '${snapshot.child('description').value}',
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 20),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              GestureDetector(
+                            ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateTaskScreen(
+                                                    title: snapshot
+                                                        .child('title')
+                                                        .value,
+                                                    description: snapshot
+                                                        .child('description')
+                                                        .value,
+                                                    id: snapshot
+                                                        .child('id')
+                                                        .value,
+                                                  )));
+                                    },
+                                    child: Icon(Icons.edit)),
+                                SizedBox(width: 10.w),
+                                GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateTaskScreen(
-                                                  title: snapshot
-                                                      .child('title')
-                                                      .value,
-                                                  description: snapshot
-                                                      .child('description')
-                                                      .value,
-                                                  id: snapshot
-                                                      .child('id')
-                                                      .value,
-                                                )));
+                                    print('this is key ${snapshot.key}');
+                                    db.child(snapshot.key!).remove().then((v) {
+                                      fluttertoas().showpopup(
+                                          Color.maincolor, 'task deleted');
+                                    });
                                   },
-                                  child: Icon(Icons.edit)),
-                              SizedBox(width: 10.w),
-                              GestureDetector(
-                                onTap: () {
-                                  print('this is key ${snapshot.key}');
-                                  database
-                                      .child(snapshot.key!)
-                                      .remove()
-                                      .then((v) {
-                                    fluttertoas().showpopup(
-                                        colors.maincolor, 'task deleted');
-                                  });
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else if (searchcontroller.text.isEmpty) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Card(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 300,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${snapshot.child('title').value}',
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    '${snapshot.child('description').value}',
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 20),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateTaskScreen(
+                                                    title: snapshot
+                                                        .child('title')
+                                                        .value,
+                                                    description: snapshot
+                                                        .child('description')
+                                                        .value,
+                                                    id: snapshot
+                                                        .child('id')
+                                                        .value,
+                                                  )));
+                                    },
+                                    child: Icon(Icons.edit)),
+                                SizedBox(width: 10.w),
+                                GestureDetector(
+                                  onTap: () {
+                                    print('this is key ${snapshot.key}');
+                                    db.child(snapshot.key!).remove().then((v) {
+                                      fluttertoas().showpopup(
+                                          Color.maincolor, 'task deleted');
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
                 },
               ),
             )

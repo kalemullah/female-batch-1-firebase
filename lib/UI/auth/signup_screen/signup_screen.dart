@@ -26,14 +26,14 @@ class _SignupScreenState extends State<SignupScreen> {
             email: emailController.text.trim(),
             password: passwordController.text.trim())
         .then((v) {
-      fluttertoas().showpopup(colors.greencolor, 'sigup successfully');
+      fluttertoas().showpopup(Color.greencolor, 'sigup successfully');
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
       isloading = false;
       setState(() {});
     }).onError((error, Stack) {
-      fluttertoas().showpopup(colors.redcolor, error.toString());
+      fluttertoas().showpopup(Color.redcolor, error.toString());
       isloading = false;
       setState(() {});
     });
@@ -42,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: colors.maincolor.withOpacity(.9),
+      backgroundColor: Color.maincolor.withOpacity(.9),
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.w),

@@ -31,11 +31,11 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
     titleController.text = widget.title;
     descriptionController.text = widget.description;
     return Scaffold(
-      backgroundColor: colors.maincolor,
+      backgroundColor: Color.maincolor,
       appBar: AppBar(
         title: Text(
           'Update screen',
-          style: TextStyle(color: colors.blackcolor),
+          style: TextStyle(color: Color.blackcolor),
         ),
       ),
       body: Center(
@@ -48,7 +48,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: colors.secondcolor,
+                    color: Color.secondcolor,
                   )),
               SizedBox(height: 20.h),
               TextField(
@@ -57,7 +57,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                 decoration: InputDecoration(
                   hintText: 'Title',
                   hintStyle: TextStyle(fontSize: 16),
-                  fillColor: colors.secondcolor,
+                  fillColor: Color.secondcolor,
                   filled: true,
                   enabledBorder: InputBorder.none,
                   border: OutlineInputBorder(
@@ -72,7 +72,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                 decoration: InputDecoration(
                   hintText: 'Description',
                   hintStyle: TextStyle(fontSize: 16),
-                  fillColor: colors.secondcolor,
+                  fillColor: Color.secondcolor,
                   filled: true,
                   enabledBorder: InputBorder.none,
                   border: OutlineInputBorder(
@@ -84,7 +84,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
               CUstomButton(
                   isloading: isdataadded,
                   text: 'Update Task',
-                  btncolor: colors.secondcolor.withOpacity(.4),
+                  btncolor: Color.secondcolor.withOpacity(.4),
                   ontap: () {
                     print(
                         'this is titla data ${titleController.text.trim().toString()}');
@@ -92,10 +92,10 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                         'this is description data ${descriptionController.text.trim().toString()}');
                     if (titleController.text.isEmpty) {
                       fluttertoas().showpopup(
-                          colors.redcolor, 'please enter title of task');
+                          Color.redcolor, 'please enter title of task');
                     } else if (descriptionController.text.isEmpty) {
                       fluttertoas().showpopup(
-                          colors.redcolor, 'please enter description of task');
+                          Color.redcolor, 'please enter description of task');
                     } else {
                       isdataadded = true;
                       setState(() {});
@@ -106,7 +106,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                             descriptionController.text.trim().toString(),
                       }).then((v) {
                         fluttertoas().showpopup(
-                            colors.greencolor, 'Task Added successfully');
+                            Color.greencolor, 'Task Added successfully');
                         titleController.clear();
                         descriptionController.clear();
                         isdataadded = false;
@@ -116,8 +116,7 @@ class _UpdateTaskScreenState extends State<UpdateTaskScreen> {
                       }).onError((error, v) {
                         isdataadded = false;
                         setState(() {});
-                        fluttertoas()
-                            .showpopup(colors.redcolor, 'Error $error');
+                        fluttertoas().showpopup(Color.redcolor, 'Error $error');
                       });
                     }
                   }),
