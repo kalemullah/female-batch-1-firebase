@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
-import 'package:firebaseproject/UI/home_screen/add_task.dart';
-import 'package:firebaseproject/UI/home_screen/update_task.dart';
+import 'package:firebaseproject/UI/todo/add_task.dart';
+import 'package:firebaseproject/UI/todo/profile.dart';
+import 'package:firebaseproject/UI/todo/update_task.dart';
 import 'package:firebaseproject/utils/colors.dart';
 import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text('Home Screen'),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Profile()));
+            },
+            icon: const Icon(Icons.person),
+          ),
           IconButton(
             onPressed: () {
               FirebaseAuth.instance.signOut().then((v) {

@@ -1,11 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
-import 'package:firebaseproject/UI/home_screen/home_screen.dart';
+import 'package:firebaseproject/UI/todo/home_screen.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
 import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -15,17 +17,31 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final db = FirebaseDatabase.instance.ref('appuser');
+  final ref = FirebaseFirestore.instance.collection('appuser');
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isloading = false;
   signupFunction() {
     isloading = true;
     setState(() {});
+
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim())
         .then((v) {
+      ref.doc(v.user!.uid).set({
+        "name": "kaleem",
+        'email': emailController.text.trim().toString(),
+        'uid': v.user!.uid
+      });
+
+      // db.child(v.user!.uid).set({
+      //   'name': "kaleem",
+      //   'email': emailController.text.trim().toString(),
+      //   'uid': v.user!.uid
+      // });
       fluttertoas().showpopup(Color.greencolor, 'sigup successfully');
 
       Navigator.pushReplacement(
