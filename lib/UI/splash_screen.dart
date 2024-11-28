@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseproject/UI/auth/signup_screen/signup_screen.dart';
+import 'package:firebaseproject/UI/social_media/home_screen.dart';
 import 'package:firebaseproject/UI/todo/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,7 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
             MaterialPageRoute(builder: (context) => const SignupScreen()));
       } else {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
+            MaterialPageRoute(builder: (context) => const PostScreen()));
       }
     });
   }

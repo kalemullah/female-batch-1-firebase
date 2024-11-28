@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebaseproject/UI/auth/login_screen/login_screen.dart';
+import 'package:firebaseproject/UI/social_media/home_screen.dart';
 import 'package:firebaseproject/UI/todo/home_screen.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
@@ -20,19 +21,20 @@ class _SignupScreenState extends State<SignupScreen> {
   final db = FirebaseDatabase.instance.ref('appuser');
   final ref = FirebaseFirestore.instance.collection('appuser');
   TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isloading = false;
   signupFunction() {
     isloading = true;
     setState(() {});
-
+    print('this is user email ${emailController.text.trim()}');
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(
             email: emailController.text.trim(),
             password: passwordController.text.trim())
         .then((v) {
       ref.doc(v.user!.uid).set({
-        "name": "kaleem",
+        "name": nameController.text.trim().toString(),
         'email': emailController.text.trim().toString(),
         'uid': v.user!.uid
       });
@@ -45,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
       fluttertoas().showpopup(Color.greencolor, 'sigup successfully');
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => const PostScreen()));
       isloading = false;
       setState(() {});
     }).onError((error, Stack) {
@@ -86,9 +88,22 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20.h,
+              SizedBox(height: 20.h),
+              TextField(
+                controller: nameController,
+                style: TextStyle(fontSize: 16, color: Colors.black),
+                decoration: InputDecoration(
+                  hintText: 'Enter your name',
+                  hintStyle: TextStyle(fontSize: 16),
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: InputBorder.none,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
               ),
+              SizedBox(height: 20.h),
               TextField(
                 controller: passwordController,
                 obscureText: true,

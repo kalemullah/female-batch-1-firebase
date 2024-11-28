@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebaseproject/UI/auth/signup_screen/signup_screen.dart';
+import 'package:firebaseproject/UI/social_media/home_screen.dart';
 import 'package:firebaseproject/UI/todo/home_screen.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/colors.dart';
@@ -31,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       isloading = false;
       setState(() {});
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => PostScreen()));
     }).onError((error, Stack) {
       fluttertoas().showpopup(Color.redcolor, error.toString());
       isloading = false;
