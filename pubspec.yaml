@@ -43,6 +43,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   fluttertoast: ^8.2.8
   intl: ^0.20.1
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:

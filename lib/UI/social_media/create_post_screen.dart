@@ -1,10 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebaseproject/custom_widget/custom_button.dart';
 import 'package:firebaseproject/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebaseproject/utils/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
@@ -24,6 +28,20 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   void initState() {
     super.initState();
     getUserData();
+  }
+
+  XFile? image;
+  File? imageFile;
+  void pickImage() async {
+    final ImagePicker _picker = ImagePicker();
+    image = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {});
+    if (image != null) {
+      print('this is image path ${image?.path}');
+      imageFile = File(image!.path);
+      setState(() {});
+    }
+    return;
   }
 
   getUserData() async {
@@ -57,6 +75,27 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     color: Color.secondcolor,
                   )),
               SizedBox(height: 20.h),
+              GestureDetector(
+                onTap: () {
+                  pickImage();
+                  // print('this is image path ${image.path}');
+                },
+                child: image != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.file(
+                          height: 100,
+                          width: 100,
+                          File(image!.path),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : CircleAvatar(
+                        radius: 50,
+                        child: Icon(Icons.person),
+                      ),
+              ),
+              SizedBox(height: 20.h),
               TextField(
                 maxLines: 5,
                 controller: titleController,
@@ -77,7 +116,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   isloading: isdataadded,
                   text: 'Add Task',
                   btncolor: Color.secondcolor.withOpacity(.4),
-                  ontap: () {
+                  ontap: () async {
                     print(
                         'this is titla data ${titleController.text.trim().toString()}');
 
@@ -87,6 +126,29 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     } else {
                       isdataadded = true;
                       setState(() {});
+                      String imageref = '';
+                      try {
+                        if (imageFile != null) {
+                          print('Image Path: ${imageFile}');
+
+                          String fileName =
+                              DateTime.now().millisecondsSinceEpoch.toString();
+                          Reference firebaseStorageRef = FirebaseStorage
+                              .instance
+                              .ref()
+                              .child('images/$fileName');
+                          UploadTask uploadTask =
+                              firebaseStorageRef.putFile(imageFile!);
+                          await uploadTask;
+                          print('File Uploaded');
+                          imageref = await firebaseStorageRef.getDownloadURL();
+                          setState(() {});
+                          print('Image URL: $imageref');
+                        }
+                      } catch (e) {
+                        print('Error: $e');
+                      }
+
                       String id =
                           DateTime.now().microsecondsSinceEpoch.toString();
                       database.doc(id).set({
@@ -94,6 +156,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         'id': id,
                         'uid': FirebaseAuth.instance.currentUser!.uid,
                         'creatat': DateTime.now(),
+                        "image": imageref,
                         'name': name,
                       }).then((v) {
                         fluttertoas()
