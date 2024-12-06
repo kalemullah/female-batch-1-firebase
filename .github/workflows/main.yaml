@@ -1,50 +1,59 @@
 name: Android Release
 
-# 1
 on:
-  # 2
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "master" ]
-
-  # 3
   workflow_dispatch:
 
-# 4
 jobs:
-  # 5
   build:
-    # 6
     runs-on: ubuntu-latest
 
-    # 7
     steps:
-      # 8
+      # Checkout code
       - uses: actions/checkout@v3
-      # 9
+
+      # Setup Java
       - uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: "12.x"
+          java-version: "12"
           cache: 'gradle'
-      # 10
+
+      # Setup Flutter
       - uses: subosito/flutter-action@v2
         with:
-          # 11
           flutter-version: "3.3.0"
           channel: 'stable'
           cache: true
-      # 12
-      - name: Flutter upgrade
+
+      # Debug npm and semver versions
+      - name: Debug npm and semver
+        run: |
+          echo "NPM Version:"
+          npm --version
+          echo "Semver Info:"
+          npm info semver
+
+      # Clean npm cache
+      - name: Clean npm cache
+        run: npm cache clean --force
+
+      # Upgrade Flutter
+      - name: Flutter Upgrade
         run: flutter upgrade --force
-      # 13
-      - name: Get dependencies
+
+      # Install dependencies
+      - name: Get Dependencies
         run: flutter pub get
 
-      #14 Runs a set of commands using the runners shell
-      - name: Start APK build
+      # Build APK
+      - name: Build APK
         run: flutter build apk
+
+      # Upload APK
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
