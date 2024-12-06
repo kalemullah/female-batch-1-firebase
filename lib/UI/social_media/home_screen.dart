@@ -86,39 +86,56 @@ class _PostScreenState extends State<PostScreen> {
                             // height: 100,
                             width: double.infinity,
                             color: Colors.teal,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      CircleAvatar(
-                                        child: Icon(Icons.person),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: [
+                                          CircleAvatar(
+                                            child: Icon(Icons.person),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            '${snapshot.data!.docs[index]['name']}',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        width: 10,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 57),
+                                      child: Text(
+                                          '${snapshot.data!.docs[index]['post']}'),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 57),
+                                      child: Text(
+                                        "${formattedDate}", // '${formatter.format(snapshot.data!.docs[index]['creatat'])}'
                                       ),
-                                      Text(
-                                        '${snapshot.data!.docs[index]['name']}',
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    ],
+                                    ),
+                                    SizedBox(height: 10),
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.network(
+                                    '${snapshot.data!.docs[index]['image']}',
+                                    height: 100,
+                                    width: 80,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 57),
-                                  child: Text(
-                                      '${snapshot.data!.docs[index]['post']}'),
-                                ),
-                                SizedBox(height: 10),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 57),
-                                  child: Text(
-                                    "${formattedDate}", // '${formatter.format(snapshot.data!.docs[index]['creatat'])}'
-                                  ),
-                                ),
-                                SizedBox(height: 10),
                               ],
                             ),
                           ),

@@ -1,122 +1,115 @@
 {
   "project_info": {
-    "project_number": "405464479106",
-    "firebase_url": "https://testing-205f1-default-rtdb.firebaseio.com",
-    "project_id": "testing-205f1",
-    "storage_bucket": "testing-205f1.firebasestorage.app"
+    "project_number": "954288427371",
+    "project_id": "talke-5b6ac",
+    "storage_bucket": "talke-5b6ac.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:5a4356fb5bd342b84d0b9b",
+        "mobilesdk_app_id": "1:954288427371:android:850b9777d7e9eb5d513c2e",
+        "android_client_info": {
+          "package_name": "com.appspot.englishtalke"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7T3Z_nH_6OD5MydrFxSxbfcXpc5bkB_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "954288427371-04b8ifuerl28hptig6oti8i9hl0m64i1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appspot.englishtalke"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954288427371:android:29bd56b2a55d9088513c2e",
+        "android_client_info": {
+          "package_name": "com.appspot.etteacher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7T3Z_nH_6OD5MydrFxSxbfcXpc5bkB_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "954288427371-04b8ifuerl28hptig6oti8i9hl0m64i1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appspot.englishtalke"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:954288427371:android:9d1d8291ed403c52513c2e",
         "android_client_info": {
           "package_name": "com.example.firebaseproject"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
+          "current_key": "AIzaSyA7T3Z_nH_6OD5MydrFxSxbfcXpc5bkB_g"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:9e6e5b5585d5a1d04d0b9b",
-        "android_client_info": {
-          "package_name": "com.example.firestore_todo_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:923ee23551a9dea54d0b9b",
-        "android_client_info": {
-          "package_name": "com.example.library_user_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:267395120c9bf07b4d0b9b",
-        "android_client_info": {
-          "package_name": "com.example.message_app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:b9178ea88fe5a5f54d0b9b",
-        "android_client_info": {
-          "package_name": "com.softzone.firebase_project"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:405464479106:android:10ec52f02b82fbb44d0b9b",
-        "android_client_info": {
-          "package_name": "com.testing.app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyABYghKyMUkv3SQXiDNlAx0Dk9ZRtxGfbY"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "954288427371-2iqpbg21tjknjqm5fm0g5vl147m9tte7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "954288427371-04b8ifuerl28hptig6oti8i9hl0m64i1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.appspot.englishtalke"
+              }
+            }
+          ]
         }
       }
     }

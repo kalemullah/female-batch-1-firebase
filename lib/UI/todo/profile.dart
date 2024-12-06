@@ -52,14 +52,15 @@ class _ProfileState extends State<Profile> {
           CircleAvatar(child: Icon(Icons.person)),
           SizedBox(height: 10),
           Text(
-            'this is name $name',
+            ' $name',
             style: TextStyle(color: Colors.black),
           ),
           SizedBox(height: 10),
           Text(
-            'this is email $email',
+            ' $email',
             style: TextStyle(color: Colors.black),
           ),
+          SizedBox(height: 20),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
                 stream: database,
@@ -96,16 +97,32 @@ class _ProfileState extends State<Profile> {
                         String formattedDate =
                             DateFormat('yyyy-MM-dd').format(dateTime);
                         return Card(
-                          child: Column(
+                          child: Row(
                             children: [
-                              Text(
-                                '${snapshot.data!.docs[index]['post']}',
-                                style: TextStyle(color: Colors.black),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  '${snapshot.data!.docs[index]['image']}',
+                                  height: 100,
+                                  width: 80,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                              Text(
-                                '$formattedDate',
-                                style: TextStyle(color: Colors.black),
-                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${snapshot.data!.docs[index]['post']}',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  SizedBox(height: 30),
+                                  Text(
+                                    '$formattedDate',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              )
                             ],
                           ),
                         );
